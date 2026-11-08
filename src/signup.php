@@ -1,4 +1,7 @@
 <?php
+// get database conecction 
+require('../settings/database.php');
+
 //get payload from fronted
     $first_name = $_POST['fname'];
     $last_name = $_POST['lname'];
@@ -9,10 +12,28 @@
 
     //MD5 metodo de encriptacion 
 
-   
-    echo "<br>" . $first_name; 
-    echo "<br>" . $last_name;
-    echo "<br>" . $ident_number;
-    echo "<br>" . $mobile_phone;
-    echo "<br>" . $e_mail;
-    echo "<br>" . $password;
+
+    //prepare query
+    $sql = "INSERT INTO 
+        users(firstname, lastname, ident_number, email, password) 
+        values(
+            '$first_name' ,
+            '$last_name', 
+            '$ident_number',
+            '$e_mail',
+            '$password'
+        ) ;
+    ";
+
+    //Execute query 
+    $res = pg_query($local_conn, $sql);
+
+    if ($res){
+        echo "<br>user has been created successfully !!!";
+
+    } 
+    else{
+        echo"<br>Error: user hasn't been created";
+    }
+    
+        
