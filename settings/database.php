@@ -39,13 +39,13 @@
     if (!$local_conn) {
         die("Error connection");
     } else{
-        echo "succes database connection !!!";
+        //echo "succes database connection !!!";
     }
 
      if (!$supa_conn) {
         die("Error supa connection");
     } else{
-        echo "<br>succes database connection !!!";
+        //echo "<br>succes database connection !!!";
     }
       
 ?>

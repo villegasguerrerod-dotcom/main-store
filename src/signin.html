@@ -1,18 +1,35 @@
 <!DOCTYPE html>
+
 <html lang="en">
+
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Main Store - Sign in</title>
+    <style>
+        body {
+            background-color: #f0f4f8;
+        }
+    </style>
+
+<meta charset="UTF-8">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Document</title>
+
 </head>
-<body>    
-     <label>Sign in</label><br><br> 
-     <form action="signin.php" method="post">
-        <!-- <label>E-Mail:</label><br> -->>
-        <input type="email" placeholder="E-Mail" required><br><br>
-        <!-- <label>Password:</label><br> -->>
-        <input type="password" placeholder="Password" required><br><br>
-        <button>Sign In</button>
+
+<body>
+    <center>
+         <h3>Login User</h3>
+
+    <form name="login-form" action="signin.php" method="post">   
+        <label>E-mail:</label><br>
+            <input type="email" name="email" placeholder="joe@mail.com" required><br><br>
+
+        <label>Password:</label><br>
+            <input type="password" name="pswd" placeholder="***" required><br><br>
+
+        <button >Login</button>
     </form>
+    </center>
 </body>
 </html>
