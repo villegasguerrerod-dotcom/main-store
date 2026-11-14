@@ -9,7 +9,8 @@ require('../settings/database.php');
     $mobile_phone = $_POST['mphone'];
     $e_mail = $_POST['email'];
     $password = MD5($_POST['pswd']);
-
+    $PHOTO_URL = 'photos/photo_default.png';
+    //echo "celular: " . $mobile_phone;
 
     //MD5 metodo de encriptacion 
 
@@ -19,13 +20,15 @@ require('../settings/database.php');
     if ($total < 1){
         //prepare query
         $sql = "INSERT INTO users
-                (firstname, lastname, ident_number, email, password) 
+                (firstname, lastname, ident_number, email, password, url_photo, mobile_phone) 
             values(
                 '$first_name' ,
                 '$last_name', 
                 '$ident_number',
                 '$e_mail',
-                '$password'
+                '$password',
+                '$PHOTO_URL',
+                '$mobile_phone'
             ) ;
         ";
 
@@ -33,7 +36,6 @@ require('../settings/database.php');
         $res = pg_query($local_conn, $sql);
 
         if ($res){
-            //echo "<br>user has been created successfully !!!";
             echo "<script> alert('user has been created successfully !!!')</script>";
             header('refresh:0;url=signin.html');
         } 
@@ -42,7 +44,7 @@ require('../settings/database.php');
         }
     } else{
          echo "<script> alert('user email al ready exist. Try again !!!')</script>";
-            header('refresh:0;url=signup.html');
+            //header('refresh:0;url=signup.html');
 
 
     }
