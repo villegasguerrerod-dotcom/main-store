@@ -60,7 +60,8 @@ from
                     <img src="icons/search.png" width="20">
                 </a> 
                 <a href="#">
-                    <img src="icons/trash.png" width="20">
+                <a href="delete_user.php?userID=<?= $row['id']?>">
+                    <img src="icons/delete.png" width="20">
                 </a> 
             </td>
         </tr>
