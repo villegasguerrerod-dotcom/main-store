@@ -18,3 +18,9 @@ CREATE TABLE users (
 SELECT * FROM users; 
 -- Insert a new user into users table 
 INSERT INTO  users(firstname, lastname, ident_number, email, password) values('duvan' ,'villegas', '108533342','villegasguerrerod@gmail.com','Dv.0814') ;
+
+--//UPDATE field url_photo 
+--UPDATE users SET url_photo = 'photos/photo_default.png'
+--UPDATE users SET url_photo = 'photos/photo_default.png' WHERE id =14;
+DELETE FROM users;
+ALTER sequence user_id_seq RESTART WITH 1;  

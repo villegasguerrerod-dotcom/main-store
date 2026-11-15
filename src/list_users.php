@@ -25,18 +25,22 @@ from
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Main Store - List Users</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script>
 </head>
 <body>
-    <table border = "2" align ="center">
-        <tr>
-            <th>Photo</th> 
-            <th>Fullname</th>  
-            <th>Email</th>
-            <th>Mobile Phone</th>
-            <th>Status </th>
-            <th>Options </th>
-                
+   <table class="table table-striped">
+         <thead>
+            <tr>
+                <th>Photo</th> 
+                <th>Fullname</th>  
+                <th>Email</th>
+                <th>Mobile Phone</th>
+                <th>Status </th>
+                <th>Options </th>
+                    
             </th>
+        </thead>    
         </tr>
         <?php  while ($row = pg_fetch_assoc($res)) {?> 
         <tr>
@@ -48,7 +52,7 @@ from
             <td><?= $row ['email']?></td>
             <td><?= $row ['mobile_phone']?></td>
             <td>Active </td>
-            <td align="center">
+            <td>
                 <a href="#">
                     <img src="icons/edit.png" width="20">
                 </a> 
