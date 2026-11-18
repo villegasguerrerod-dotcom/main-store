@@ -7,16 +7,16 @@ include('../settings/database.php');
     //Get data from users table
     $sql="
     select 
-	id,
-	firstname || ' ' || lastname as fulllname,
-	email,
-	mobile_phone,
-	status,
-	case when status = true then 'Active' else 'Inactive' end as status,
-    url_photo
-from 
-	users
-    ";
+	    id,
+        firstname || ' ' || lastname as fulllname,
+        email,
+        mobile_phone,
+        status,
+        case when status = true then 'Active' else 'Inactive' end as status,
+        url_photo
+    from 
+        users
+        ";
     $res = pg_query ($local_conn, $sql);
 ?>
 <!DOCTYPE html>
@@ -51,21 +51,32 @@ from
             <td><?= $row ['fulllname']?></td>
             <td><?= $row ['email']?></td>
             <td><?= $row ['mobile_phone']?></td>
-            <td>Active </td>
+            <td><?= $row ['status']?></td>
             <td>
                 <a href="#">
+                    <a href="edit_user.php?userID=<?= $row['id']?>">
                     <img src="icons/edit.png" width="20">
                 </a> 
                 <a href="#">
                     <img src="icons/search.png" width="20">
-                </a> 
+                </a>
                 <a href="#">
-                <a href="delete_user.php?userID=<?= $row['id']?>">
+                    <a href="delete_user.php?userID=<?= $row['id']?>">
                     <img src="icons/delete.png" width="20">
                 </a> 
+                <a href="update_user_status.php?userID=<?= $row['id'] ?>&userStatus=<?= $row['status'] ?>">
+                    <?php
+                        if($row['status'] == 'Active'){
+                            echo "<img src='icons/disable.png' alt='Inactive user' width='20'>";
+                        }else{
+                            echo "<img src='icons/enable.png' alt='Active user' width='20'>";
+                        }
+                    ?>
+                </a>
             </td>
         </tr>
          <?php }?>
     </table>
     </body>
+    <a href=home.php>home</a>
 </html>
