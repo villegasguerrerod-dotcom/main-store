@@ -1,37 +1,172 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Main Store - Register User</title>
-            <link rel="icon" type="image/png" href="src/icons/main_store_icon.png">
-   
-</head>
-<body>
 
-    
-    <center>
-    <label>Register User Form</label><br><br>
-        <form  name="register-form" action="signup.php" method="post">
-            <label>Firstname:</label><br>
-                <input type="text" name="fname" placeholder="Pepito" required><br><br>
-            <label>Lastname:</label><br>
-                <input type="text" name="lname" placeholder="Perez" required><br><br>
-            <label>Identification Number:</label><br>
-                <input type="text" name="idnumber" placeholder="1234567890" required><br><br>
-            <label>Mobile Phone:</label><br>
-                <input type="text" name="mphone" placeholder="3133333333" required><br><br>
-            <label>E-Mail:</label><br>
-                <input type="email" name="email" placeholder="alguien@mail.com" required><br><br>
-            <label>Password:</label><br>
-                <input type="password" name="pswd" placeholder="Algun123*" required><br><br>
-            <button>Register</button>
-        </form>
-    <br>
-    <a href=signin.html>I already have an account</a>
-    <br><br>
-    <a href=..\>Go to home</a>
-    </center>
+    <meta charset="UTF-8">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Main Store - Register User</title>
+
+    <!-- Main Store Icon -->
+    <link rel="icon" type="image/png" href="icons/main_store_icon.png">
+
+    <!-- Font Awesome -->
+    <link href="../assets/vendor/fontawesome-free/css/all.min.css" rel="stylesheet">
+
+    <!-- SB Admin 2 -->
+    <link href="../assets/css/sb-admin-2.min.css" rel="stylesheet">
+
+</head>
+
+<body class="bg-gradient-primary">
+
+    <div class="container">
+
+        <div class="row justify-content-center">
+
+            <div class="col-xl-10 col-lg-12 col-md-9">
+
+                <div class="card o-hidden border-0 shadow-lg my-5">
+
+                    <div class="card-body p-0">
+
+                        <div class="row">
+
+                            <div class="col-lg-12">
+
+                                <div class="p-5">
+
+                                    <div class="text-center">
+
+                                        <h3 class="h4 text-gray-900 mb-4">
+                                            Main Store
+                                        </h3>
+
+                                        <h3 class="h5 text-gray-900 mb-4">
+                                            Register User Form
+                                        </h3>
+
+                                    </div>
+
+                                    <form name="register-form"
+                                          action="signup.php"
+                                          method="post">
+
+                                        <div class="form-group">
+                                                    <input type="text"
+                                                    name="fname"
+                                                    class="form-control form-control-user"
+                                                    placeholder="Firstname"
+                                                    required>
+
+                                        </div>
+
+                                        <div class="form-group">
+
+                                            <input type="text"
+                                                   name="lname"
+                                                   class="form-control form-control-user"
+                                                   placeholder="Lastname"
+                                                   required>
+
+                                        </div>
+
+                                        <div class="form-group">
+
+                                            <input type="text"
+                                                   name="idnumber"
+                                                   class="form-control form-control-user"
+                                                   placeholder="Identification Number:"
+                                                   required>
+
+                                        </div>
+
+                                        <div class="form-group">
+
+                                            <input type="text"
+                                                   name="mphone"
+                                                   class="form-control form-control-user"
+                                                   placeholder="Mobile Phone"
+                                                   required>
+
+                                        </div>
+
+                                        <div class="form-group">
+
+
+                                            <input type="email"
+                                                   name="email"
+                                                   class="form-control form-control-user"
+                                                   placeholder="E-Mail"
+                                                   required>
+
+                                        </div>
+
+                                        <div class="form-group">
+
+                                            <input type="password"
+                                                   name="pswd"
+                                                   class="form-control form-control-user"
+                                                   placeholder="Password"
+                                                   required>
+
+                                        </div>
+
+                                        <button type="submit"
+                                                class="btn btn-primary btn-user btn-block">
+
+                                            Register
+
+                                        </button>
+
+                                    </form>
+
+                                    <hr>
+
+                                    <div class="text-center">
+
+                                        <a class="small" href="signin.html">
+                                            I already have an account
+                                        </a>
+
+                                    </div>
+
+                                    <div class="text-center">
+
+                                        <a class="small" href="../index.html">
+                                            Go to home
+                                        </a>
+
+                                    </div>
+
+                                </div>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <!-- JavaScript -->
+    <script src="../assets/vendor/jquery/jquery.min.js"></script>
+
+    <script src="../assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+
+    <script src="../assets/vendor/jquery-easing/jquery.easing.min.js"></script>
+
+    <script src="../assets/js/sb-admin-2.min.js"></script>
+
 </body>
+
 </html>

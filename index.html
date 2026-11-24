@@ -1,20 +1,78 @@
 <!DOCTYPE html>
 <html lang="en">
-    <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Main Store</title>
-        <link rel="icon" type="image/png" href="src/icons/main_store_icon.png">
 
-    
-        <style>
-        body {background-color: #587491;}
-        </style>
-    </head>
-    <body>
-        
-        <a href="src/signin.html">Sign in</a> |
-        <a href="src/signup.html">Sign up</a>
-    
-    </body>
+<head>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Main Store</title>
+
+    <link rel="icon" type="image/png" href="src/icons/main_store_icon.png">
+
+    <link href="assets/css/sb-admin-2.min.css" rel="stylesheet">
+
+    <style>
+
+        body {
+            background: linear-gradient(135deg, #587491, #263f59);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-family: 'Nunito', sans-serif;
+        }
+
+        .welcome-card {
+            background-color: white;
+            width: 90%;
+            max-width: 500px;
+            padding: 50px 35px;
+            border-radius: 20px;
+            text-align: center;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+        }
+
+        .welcome-card h1 {
+            color: #344f6b;
+            font-weight: 800;
+            margin-bottom: 15px;
+        }
+
+        .welcome-card p {
+            color: #858585;
+            margin-bottom: 30px;
+        }
+
+        .welcome-card .btn {
+            margin: 10px 0;
+            padding: 12px;
+            border-radius: 25px;
+            font-weight: bold;
+        }
+
+    </style>
+
+</head>
+
+<body>
+
+    <div class="welcome-card">
+
+        <h1>Main Store</h1>
+
+        <p>Welcome to our management platform</p>
+
+        <a href="src/signin.html" class="btn btn-primary btn-user btn-block">
+            Sign in
+        </a>
+
+        <a href="src/signup.html" class="btn btn-outline-primary btn-user btn-block">
+            Sign up
+        </a>
+
+    </div>
+
+</body>
+
 </html>
