@@ -8,11 +8,13 @@ require('../settings/database.php');
     $ident_number =  $_POST['idnumber'];
     $mobile_phone = $_POST['mphone'];
     $e_mail = $_POST['email'];
-    $password = MD5($_POST['pswd']);
+    //MD5 metodo de encriptacion basico
+    //$password = MD5($_POST['pswd']);
     $PHOTO_URL = 'photos/photo_default.png';
-    //echo "celular: " . $mobile_phone;
+    //hash metodo de encriptacion de mayor seguridad 
+    $password = password_hash($_POST['pswd'], PASSWORD_DEFAULT);
 
-    //MD5 metodo de encriptacion 
+    
 
     $sql_check_email = "SELECT * FROM users WHERE email = '$e_mail' ";
     $res = pg_query($local_conn, $sql_check_email);

@@ -1,41 +1,69 @@
+
+
 <?php
 // Get database connection
 include('../settings/database.php');
 
-session_start();
-if (!isset($_SESSION['user_id'])) {
-    header('refresh:0;url=signin.html');
-} else {
-    header('refresh:0;url=home.php');
-}
-
 // Get payload from frontend
 $email = $_POST['email'];
-$passwd = MD5($_POST['pswd']);
+$passwd = $_POST['pswd'];
 
-$sql_check_email = "
-    SELECT 
-        id,
-        firstname,
-        lastname,
-        email,
-        url_photo
-    FROM 
-        users 
-    WHERE 
-        email = '$email' and 
-        password = '$passwd' 
-";
+
+// verificar si el email existe en la database
+$sql_check_email = "SELECT email FROM users WHERE email = '$email'";
+
 $res = pg_query($local_conn, $sql_check_email);
-$total = pg_num_rows($res);
-$row = pg_fetch_assoc($res);
 
-if ($total > 0) {
-    $_SESSION['user_id'] = $row['id'];
-    $_SESSION['user_firstname'] = $row['firstname'];
-    $_SESSION['user_lastname'] = $row['lastname'];
-    header('refresh:0;url=home.php');
+$total = pg_num_rows($res);
+
+
+// verificar si el password del formulario es igual al de la database
+$sql_get_password = "SELECT password FROM users WHERE email = '$email'";
+
+$res = pg_query($local_conn, $sql_get_password);
+
+if (pg_num_rows($res) > 0) {
+
+    $row2 = pg_fetch_assoc($res);
+
+    $passwd_db = $row2['password'];
+
+    $passwd = password_verify($passwd, $passwd_db);
+
 } else {
-    echo "<script>alert('Invalid email or password. Try again !!!')</script>";
-    header('refresh:0;url=signin.html');
+
+    $passwd = 0;
 }
+
+
+// verificar usuario y contraseña
+if ($total > 0) {
+
+    if ($passwd == true) {
+
+        session_start();
+
+        $_SESSION['user_id'] = $email;
+
+        header('Location: home.php');
+        exit;
+
+    } else {
+
+        echo "<script>
+            alert('Incorrect password. Try again !!!');
+            window.location.href = 'signin.html';
+        </script>";
+        exit;
+    }
+
+} else {
+
+    echo "<script>
+        alert('User email does not exist. Try again !!!');
+        window.location.href = 'signin.html';
+    </script>";
+    exit;
+}
+
+?>

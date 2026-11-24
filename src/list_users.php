@@ -2,7 +2,22 @@
 /*
 use this URL to print data in browser
 http://localhost/main-store/src/list_users.php*/
+
+session_start();
+if (!isset($_SESSION['user_id'])) {
+    header('refresh:0;url=signin.html');
+ exit();
+}
 include('../settings/database.php');
+
+    // Filter received from the select (all | active | inactive)
+    $filter = $_GET['filter'] ?? 'all';
+    $where = '';
+    if ($filter == 'active') {
+        $where = 'where status = true';
+    } elseif ($filter == 'inactive') {
+        $where = 'where status = false';
+    }
 
     //Get data from users table
     $sql="
@@ -16,6 +31,7 @@ include('../settings/database.php');
         url_photo
     from 
         users
+    $where
         ";
     $res = pg_query ($local_conn, $sql);
 ?>
@@ -29,7 +45,14 @@ include('../settings/database.php');
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script>
 </head>
 <body>
-   <table class="table table-striped">
+    <form method="GET" action="list_users.php">
+        <select name="filter" onchange="this.form.submit()">
+            <option value="all" <?= $filter == 'all' ? 'selected' : '' ?>>List all users</option>
+            <option value="active" <?= $filter == 'active' ? 'selected' : '' ?>>List active users only</option>
+            <option value="inactive" <?= $filter == 'inactive' ? 'selected' : '' ?>>List inactive users only</option>
+        </select>
+    </form>
+    <table class="table table-striped">
          <thead>
             <tr>
                 <th>Photo</th> 
@@ -78,5 +101,5 @@ include('../settings/database.php');
          <?php }?>
     </table>
     </body>
-    <a href=home.php>home</a>
+    <a href=home.php>Go to home</a>
 </html>

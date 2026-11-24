@@ -23,8 +23,9 @@ if (!isset($_SESSION['user_id'])) {
 <body>
     <center>
         <?php //(background-color: white;
-        echo $_SESSION ['user_firstname']." ". $_SESSION['user_lastname'];?>
-        <h3>Welcome to Main Store</h3> | <a href="logout.php">Logout</a>
+        //echo $_SESSION ['user_firstname']." ". $_SESSION['user_lastname'];?>
+        <h3>Welcome to Main Store</h3> <br>
+        <a href="logout.php">Logout</a>
     </center>
 
     Menu:
