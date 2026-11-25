@@ -1,0 +1,271 @@
+
+
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Main Store - Dashboard</title>
+
+    <!-- SB Admin 2 -->
+    <link href="assets/vendor/fontawesome-free/css/all.min.css" rel="stylesheet">
+    <link href="assets/css/sb-admin-2.min.css" rel="stylesheet">
+
+    <style>
+        body {
+            background-color: #f8f9fc;
+            font-family: Nunito, sans-serif;
+        }
+
+        #wrapper {
+            display: flex;
+            min-height: 100vh;
+        }
+
+        .sidebar {
+            width: 225px;
+            min-height: 100vh;
+            background-color: #4e73df;
+            color: white;
+            flex-shrink: 0;
+        }
+
+        .sidebar-brand {
+            height: 70px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 20px;
+            font-weight: bold;
+            text-decoration: none;
+            border-bottom: 1px solid rgba(255,255,255,.15);
+        }
+
+        .sidebar a.menu-link {
+            display: block;
+            padding: 15px 20px;
+            color: rgba(255,255,255,.85);
+            text-decoration: none;
+        }
+
+        .sidebar a.menu-link:hover {
+            background-color: rgba(255,255,255,.15);
+            color: white;
+        }
+
+        .main-content {
+            flex: 1;
+            min-width: 0;
+        }
+
+        .topbar {
+            height: 70px;
+            background-color: white;
+            box-shadow: 0 2px 10px rgba(0,0,0,.05);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 30px;
+        }
+
+        .content {
+            padding: 30px;
+        }
+
+        .welcome-card {
+            background: white;
+            border-left: 5px solid #4e73df;
+            padding: 25px;
+            border-radius: 5px;
+            box-shadow: 0 2px 10px rgba(0,0,0,.05);
+            margin-bottom: 25px;
+        }
+
+        .option-card {
+            background: white;
+            padding: 25px;
+            border-radius: 6px;
+            box-shadow: 0 2px 10px rgba(0,0,0,.05);
+            text-align: center;
+            height: 100%;
+            transition: transform .2s;
+        }
+
+        .option-card:hover {
+            transform: translateY(-4px);
+        }
+
+        .option-card i {
+            font-size: 35px;
+            color: #4e73df;
+            margin-bottom: 15px;
+        }
+
+        .option-card a {
+            text-decoration: none;
+            color: #4e73df;
+            font-weight: bold;
+        }
+
+        .page-title {
+            color: #5a5c69;
+            font-weight: bold;
+            margin-bottom: 25px;
+        }
+
+        @media (max-width: 768px) {
+            #wrapper {
+                display: block;
+            }
+
+            .sidebar {
+                width: 100%;
+                min-height: auto;
+            }
+
+            .content {
+                padding: 20px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+<div id="wrapper">
+
+    <!-- MENU LATERAL -->
+    <nav class="sidebar">
+
+        <a href="home.php" class="sidebar-brand">
+            MAIN STORE
+        </a>
+
+        <hr style="border-color:rgba(255,255,255,.2)">
+
+        <a href="home.php" class="menu-link">
+            <i class="fas fa-fw fa-tachometer-alt"></i>
+            Dashboard
+        </a>
+
+        <a href="list_users.php" class="menu-link">
+            <i class="fas fa-fw fa-users"></i>
+            List Users
+        </a>
+
+        <hr style="border-color:rgba(255,255,255,.2)">
+
+        <a href="logout.php" class="menu-link">
+            <i class="fas fa-fw fa-sign-out-alt"></i>
+            Logout
+        </a>
+
+    </nav>
+
+    <!-- CONTENIDO -->
+    <div class="main-content">
+
+        <!-- BARRA SUPERIOR -->
+        <header class="topbar">
+
+            <h6 class="m-0 font-weight-bold text-primary">
+                Main Store | Administration
+            </h6>
+
+            <span class="text-gray-600">
+                <i class="fas fa-user-circle"></i>
+                Administrator
+            </span>
+
+        </header>
+
+        <main class="content">
+
+            <h1 class="page-title">Dashboard</h1>
+
+            <!-- BIENVENIDA -->
+            <section class="welcome-card">
+                <h4 class="font-weight-bold text-primary">
+                    Welcome to Main Store
+                </h4>
+
+                <p class="mb-0 text-gray-600">
+                    Administration panel. Select an available option
+                    to continue working.
+                </p>
+            </section>
+
+            <h5 class="font-weight-bold text-gray-800 mb-4">
+                Available Options
+            </h5>
+
+            <div class="row">
+
+                <!-- DASHBOARD -->
+                <div class="col-xl-4 col-md-6 mb-4">
+                    <div class="option-card">
+                        <i class="fas fa-tachometer-alt"></i>
+
+                        <h5 class="font-weight-bold">
+                            Dashboard
+                        </h5>
+
+                        <p class="text-gray-600">
+                            Main administration panel.
+                        </p>
+
+                        <a href="home.php">Access</a>
+                    </div>
+                </div>
+
+                <!-- USERS -->
+                <div class="col-xl-4 col-md-6 mb-4">
+                    <div class="option-card">
+                        <i class="fas fa-users"></i>
+
+                        <h5 class="font-weight-bold">
+                            Users
+                        </h5>
+
+                        <p class="text-gray-600">
+                            View the registered users.
+                        </p>
+
+                        <a href="list_users.php">Access</a>
+                    </div>
+                </div>
+
+                <!-- LOGOUT -->
+                <div class="col-xl-4 col-md-6 mb-4">
+                    <div class="option-card">
+                        <i class="fas fa-sign-out-alt"></i>
+
+                        <h5 class="font-weight-bold">
+                            Logout
+                        </h5>
+
+                        <p class="text-gray-600">
+                            Close your current session.
+                        </p>
+
+                        <a href="logout.php">Access</a>
+                    </div>
+                </div>
+
+            </div>
+
+        </main>
+
+        <footer class="text-center py-3 text-gray-600">
+            Main Store &copy; 2026
+        </footer>
+
+    </div>
+
+</div>
+
+</body>
+</html>

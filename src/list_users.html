@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Main Store - List Users</title>
+
+    <link href="../assets/vendor/fontawesome-free/css/all.min.css" rel="stylesheet">
+    <link href="../assets/css/sb-admin-2.min.css" rel="stylesheet">
+
+    <style>
+        body {
+            background-color: #f0f4f8;
+        }
+
+        .user-photo {
+            width: 40px;
+            height: 40px;
+            object-fit: cover;
+            border-radius: 50%;
+        }
+
+        .action-icon {
+            width: 20px;
+            margin: 0 4px;
+        }
+
+        .page-title {
+            color: #4e73df;
+            font-weight: bold;
+        }
+    </style>
+</head>
+
+<body id="page-top">
+
+    <div id="wrapper">
+
+        <!-- SIDEBAR -->
+        <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion">
+
+            <a class="sidebar-brand d-flex align-items-center justify-content-center"
+               href="../home.php">
+
+                <div class="sidebar-brand-icon">
+                    <i class="fas fa-store"></i>
+                </div>
+
+                <div class="sidebar-brand-text mx-3">
+                    MAIN STORE
+                </div>
+
+            </a>
+
+            <hr class="sidebar-divider">
+
+            <div class="sidebar-heading">Menu</div>
+
+            <li class="nav-item">
+                <a class="nav-link" href="home.html">
+                    <i class="fas fa-fw fa-home"></i>
+                    <span>Dashboard</span>
+                </a>
+            </li>
+
+            <li class="nav-item active">
+                <a class="nav-link" href="list_users.php">
+                    <i class="fas fa-fw fa-users"></i>
+                    <span>List Users</span>
+                </a>
+            </li>
+
+            <hr class="sidebar-divider">
+
+            <li class="nav-item">
+                <a class="nav-link" href="../logout.php">
+                    <i class="fas fa-fw fa-sign-out-alt"></i>
+                    <span>Logout</span>
+                </a>
+            </li>
+
+        </ul>
+
+        <!-- CONTENT -->
+        <div id="content-wrapper" class="d-flex flex-column">
+
+            <div id="content">
+
+                <!-- TOPBAR -->
+                <nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 shadow">
+
+                    <span class="font-weight-bold text-primary">
+                        Main Store | Administration
+                    </span>
+
+                    <ul class="navbar-nav ml-auto">
+                        <li class="nav-item">
+                            <span class="nav-link">
+                                Administrator
+                                <i class="fas fa-user-circle ml-2"></i>
+                            </span>
+                        </li>
+                    </ul>
+
+                </nav>
+
+                <!-- PAGE CONTENT -->
+                <div class="container-fluid">
+
+                    <h1 class="h3 mb-4 page-title">
+                        Users Management
+                    </h1>
+
+                    <div class="card shadow mb-4">
+
+                        <div class="card-header py-3">
+
+                            <h6 class="m-0 font-weight-bold text-primary">
+                                Registered Users
+                            </h6>
+
+                        </div>
+
+                        <div class="card-body">
+
+                            <!-- FILTER -->
+                            <form method="GET" action="list_users.php" class="mb-4">
+
+                                <label for="filter">Filter users:</label>
+
+                                <select name="filter"
+                                        id="filter"
+                                        class="form-control"
+                                        style="max-width: 250px;"
+                                        onchange="this.form.submit()">
+
+                                    <option value="all">List all users</option>
+
+                                    <option value="active">List active users only</option>
+
+                                    <option value="inactive">List inactive users only</option>
+
+                                </select>
+
+                            </form>
+
+                            <!-- USERS TABLE -->
+                            <div class="table-responsive">
+
+                                <table class="table table-bordered table-hover">
+
+                                    <thead class="thead-light">
+                                        <tr>
+                                            <th>Photo</th>
+                                            <th>Fullname</th>
+                                            <th>Email</th>
+                                            <th>Mobile Phone</th>
+                                            <th>Status</th>
+                                            <th>Options</th>
+                                        </tr>
+                                    </thead>
+
+                                    <tbody>
+                                        {{USER_ROWS}}
+                                    </tbody>
+
+                                </table>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+            <!-- FOOTER -->
+            <footer class="sticky-footer bg-white">
+
+                <div class="container my-auto">
+                    <div class="text-center my-auto">
+                        <span>Copyright &copy; Main Store 2026</span>
+                    </div>
+                </div>
+
+            </footer>
+
+        </div>
+
+    </div>
+
+    <!-- SCRIPTS -->
+    <script src="../assets/vendor/jquery/jquery.min.js"></script>
+    <script src="../assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <script src="../assets/vendor/jquery-easing/jquery.easing.min.js"></script>
+    <script src="../assets/js/sb-admin-2.min.js"></script>
+
+</body>
+</html>
