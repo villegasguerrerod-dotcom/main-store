@@ -1,4 +1,3 @@
-
 <?php
 /*
 use this URL to print data in browser
@@ -7,8 +6,14 @@ http://localhost/main-store/src/list_users.php
 
 session_start();
 
-if (!isset($_SESSION['user_id'])) {
-    header('refresh:0;url=signin.html');
+if (!isset($_SESSION['user_id']) || !isset($_SESSION['user_role'])) {
+    header('Location: signin.html');
+    exit();
+}
+
+// Only administrators can access the users list
+if ($_SESSION['user_role'] !== 'administrator') {
+    header('Location: home.php');
     exit();
 }
 

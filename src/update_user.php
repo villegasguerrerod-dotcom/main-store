@@ -1,82 +1,173 @@
 
 <?php
 session_start();
-include('../settings/database.php');
 
-/*if (!isset($_SESSION['user_id'])) {
+// 1. Verify active session
+if (!isset($_SESSION['user_id']) || !isset($_SESSION['user_role'])) {
     header('Location: signin.html');
     exit();
 }
 
+// 2. Only administrators can update users
+if ($_SESSION['user_role'] !== 'administrator') {
+    header('Location: home.php');
+    exit();
+}
+
+// 3. Only allow POST requests
 if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
     http_response_code(405);
     exit('Método no permitido.');
-}*/
+}
 
-$col = 'url_photo'; // <-- cambia si tu columna se llama photo_url
+// 4. Database connection
+require('../settings/database.php');
 
+// 5. Receive form data
 $id           = filter_input(INPUT_POST, 'id', FILTER_VALIDATE_INT);
 $firstname    = trim($_POST['firstname'] ?? '');
 $lastname     = trim($_POST['lastname'] ?? '');
 $email        = trim($_POST['email'] ?? '');
 $mobile_phone = trim($_POST['mobile_phone'] ?? '');
 
-if (!$id || $firstname === '' || $lastname === '' || $email === '' || $mobile_phone === '') {
+if (!$id || $firstname === '' || $lastname === '' ||
+    $email === '' || $mobile_phone === '') {
     exit('Datos incompletos.');
 }
 
-// ---------- A: actualizar datos ----------
-$sql = 'UPDATE users 
-    SET firstname = $1, lastname = $2, email = $3, mobile_phone = $4 
-    WHERE id = $5';
-$result = pg_query_params($local_conn, $sql, array($firstname, $lastname, $email, $mobile_phone, $id));
+// 6. Update user information
+$sql = 'UPDATE users
+        SET firstname = $1,
+            lastname = $2,
+            email = $3,
+            mobile_phone = $4
+        WHERE id = $5';
 
-if (!$result) {
-    echo "Error al actualizar los datos";
-    exit;
-   
+$result = pg_query_params(
+    $local_conn,
+    $sql,
+    array($firstname, $lastname, $email, $mobile_phone, $id)
+);
+
+if (!$result || pg_affected_rows($result) !== 1) {
+    exit('Error al actualizar los datos del usuario.');
 }
 
-// ---------- B: foto (opcional) ----------
-if (isset($_FILES['photo']) && $_FILES['photo']['error'] !== UPLOAD_ERR_NO_FILE) {
+// 7. Process profile photo only if one was selected
+if (isset($_FILES['photo']) &&
+    $_FILES['photo']['error'] !== UPLOAD_ERR_NO_FILE) {
 
     if ($_FILES['photo']['error'] !== UPLOAD_ERR_OK) {
-        exit('Error al subir la foto (código ' . $_FILES['photo']['error'] . ').');
+        exit('Error al subir la fotografía.');
     }
 
+    // Maximum size: 2 MB
     if ($_FILES['photo']['size'] > 2 * 1024 * 1024) {
-        exit('La foto supera 2 MB.');
+        exit('La fotografía supera los 2 MB.');
     }
 
-    // Verificar el tipo real del archivo
+    // Verify actual image type
     $mime = mime_content_type($_FILES['photo']['tmp_name']);
-    $allowed = array('image/jpeg' => 'jpg', 'image/png' => 'png');
+
+    $allowed = array(
+        'image/jpeg' => 'jpg',
+        'image/png' => 'png'
+    );
 
     if (!isset($allowed[$mime])) {
-        echo "Solo se permiten fotos JPG o PNG. <a href='edit_user.php?userID=" . (int)$id . "'>Volver</a>";
-        exit;
+        exit('Solo se permiten fotografías JPG o PNG.');
     }
 
+    // Get the updated mobile number from the database
+    $sql_phone = 'SELECT mobile_phone FROM users WHERE id = $1';
+
+    $res_phone = pg_query_params(
+        $local_conn,
+        $sql_phone,
+        array($id)
+    );
+
+    if (!$res_phone || pg_num_rows($res_phone) === 0) {
+        exit('No se encontró el usuario.');
+    }
+
+    $user_data = pg_fetch_assoc($res_phone);
+
+    // Use only numeric characters in the filename
+    $phone = preg_replace('/[^0-9]/', '', $user_data['mobile_phone']);
+
+    if ($phone === '') {
+        exit('El número de celular no es válido.');
+    }
+
+    // Check that another user does not have the same phone number
+    $sql_duplicate = "
+        SELECT id
+        FROM users
+        WHERE regexp_replace(
+            COALESCE(mobile_phone, ''),
+            '[^0-9]',
+            '',
+            'g'
+        ) = $1
+        AND id <> $2
+    ";
+
+    $res_duplicate = pg_query_params(
+        $local_conn,
+        $sql_duplicate,
+        array($phone, $id)
+    );
+
+    if (!$res_duplicate) {
+        exit('No se pudo verificar el número de celular.');
+    }
+
+    if (pg_num_rows($res_duplicate) > 0) {
+        exit('Otro usuario tiene registrado el mismo número de celular.');
+    }
+
+    // Photos directory
     $dir = __DIR__ . '/photos/';
+
     if (!is_dir($dir)) {
-        mkdir($dir, 0755, true);
+        if (!mkdir($dir, 0755, true)) {
+            exit('No se pudo crear la carpeta photos.');
+        }
     }
 
-    $filename  = $id . '_' . bin2hex(random_bytes(8)) . '.' . $allowed[$mime];
+    if (!is_writable($dir)) {
+        exit('La carpeta photos no tiene permisos de escritura.');
+    }
+
+    // Filename = mobile number + real extension
+    $filename = $phone . '.' . $allowed[$mime];
+
     $photo_url = 'photos/' . $filename;
 
-    if (!move_uploaded_file($_FILES['photo']['tmp_name'], $dir . $filename)) {
-        exit('No se pudo guardar la foto. Revisa los permisos de la carpeta photos.');
+    // Move photo to src/photos
+    if (!move_uploaded_file(
+        $_FILES['photo']['tmp_name'],
+        $dir . $filename
+    )) {
+        exit('No se pudo guardar la fotografía en la carpeta photos.');
     }
 
-    $sql = "UPDATE users SET $col = $1 WHERE id = $2";
-    $r = pg_query_params($local_conn, $sql, array($photo_url, $id));
+    // Update photo path in database
+    $sql_photo = 'UPDATE users SET url_photo = $1 WHERE id = $2';
 
-    if (!$r) {
-        exit('La foto se subió pero no se guardó en la base de datos: ' . pg_last_error($local_conn));
+    $result_photo = pg_query_params(
+        $local_conn,
+        $sql_photo,
+        array($photo_url, $id)
+    );
+
+    if (!$result_photo) {
+        exit('La fotografía se guardó, pero no se pudo actualizar la base de datos.');
     }
 }
 
-// ---------- C: volver a la lista ----------
+// 8. Return to users list
 header('Location: list_users.php');
 exit;
+?>

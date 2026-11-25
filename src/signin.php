@@ -1,69 +1,46 @@
-
-
 <?php
 // Get database connection
 include('../settings/database.php');
 
-// Get payload from frontend
 $email = $_POST['email'];
 $passwd = $_POST['pswd'];
 
+// Check email and get user information
+$sql_check_email = "SELECT email, password, role FROM users WHERE email = $1";
+$res = pg_query_params($local_conn, $sql_check_email, array($email));
 
-// verificar si el email existe en la database
-$sql_check_email = "SELECT email FROM users WHERE email = '$email'";
+if ($res && pg_num_rows($res) > 0) {
 
-$res = pg_query($local_conn, $sql_check_email);
+    $user = pg_fetch_assoc($res);
 
-$total = pg_num_rows($res);
-
-
-// verificar si el password del formulario es igual al de la database
-$sql_get_password = "SELECT password FROM users WHERE email = '$email'";
-
-$res = pg_query($local_conn, $sql_get_password);
-
-if (pg_num_rows($res) > 0) {
-
-    $row2 = pg_fetch_assoc($res);
-
-    $passwd_db = $row2['password'];
-
-    $passwd = password_verify($passwd, $passwd_db);
+    $passwd_db = $user['password'];
+    $passwd_valid = password_verify($passwd, $passwd_db);
 
 } else {
-
-    $passwd = 0;
+    $passwd_valid = false;
 }
 
+if ($res && pg_num_rows($res) > 0) {
 
-// verificar usuario y contraseña
-if ($total > 0) {
-
-    if ($passwd == true) {
+    if ($passwd_valid == true) {
 
         session_start();
 
-        $_SESSION['user_id'] = $email;
+        $_SESSION['user_id'] = $user['email'];
+
+        // NEW: Save user role in session
+        $_SESSION['user_role'] = $user['role'];
 
         header('Location: home.php');
         exit;
 
     } else {
-
-        echo "<script>
-            alert('Incorrect password. Try again !!!');
-            window.location.href = 'signin.html';
-        </script>";
+        echo "<script>alert('Incorrect password. Try again !!!'); window.location.href = 'signin.html';</script>";
         exit;
     }
 
 } else {
-
-    echo "<script>
-        alert('User email does not exist. Try again !!!');
-        window.location.href = 'signin.html';
-    </script>";
+    echo "<script>alert('User email does not exist. Try again !!!'); window.location.href = 'signin.html';</script>";
     exit;
 }
-
 ?>

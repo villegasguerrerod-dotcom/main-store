@@ -1,9 +1,21 @@
 <?php
+session_start();
+
+// Verify that the user has an active session
+if (!isset($_SESSION['user_id']) || !isset($_SESSION['user_role'])) {
+    header('Location: signin.html');
+    exit();
+}
+
+// Only administrators can edit users
+if ($_SESSION['user_role'] !== 'administrator') {
+    header('Location: home.php');
+    exit();
+}
+
 include('../settings/database.php');
 
 $id = $_GET['userID'] ?? null;
-
-$user = null;
 
 if ($id) {
     $sql_edit_user = 'SELECT * FROM users WHERE id = $1';
