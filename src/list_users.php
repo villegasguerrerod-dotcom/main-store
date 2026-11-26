@@ -48,9 +48,7 @@ $sql = "
 $res = pg_query($local_conn, $sql);
 
 
-// =====================================================
-// NUEVO CAMBIO 1: GENERAR LAS FILAS DE LA TABLA HTML
-// =====================================================
+// GENERAR LAS FILAS DE LA TABLA HTML
 
 $rows = '';
 
@@ -86,9 +84,16 @@ while ($row = pg_fetch_assoc($res)) {
                 <img src='icons/search.png' width='20' alt='Search'>
             </a>
 
-            <a href='delete_user.php?userID=$id'>
-                <img src='icons/delete.png' width='20' alt='Delete'>
-            </a>
+            <form action=\"delete_user.php\" method=\"POST\" style=\"display:inline;\"
+                onsubmit=\"return confirm('¿Está seguro de eliminar este usuario?');\">
+
+                <input type=\"hidden\" name=\"userID\" value=\"$id\">
+
+                <button type=\"submit\" style=\"border:none; background:none; padding:0; cursor:pointer;\">
+                    <img src=\"icons/delete.png\" width=\"20\" alt=\"Delete\">
+                </button>
+
+            </form>
 
             <a href='update_user_status.php?userID=$id&userStatus=" . urlencode($status) . "'>
                 <img src='icons/$icon' width='20' alt='Change status'>
@@ -102,9 +107,7 @@ if ($rows == '') {
 }
 
 
-// =====================================================
-// NUEVO CAMBIO 2: CARGAR EL ARCHIVO HTML
-// =====================================================
+// CARGAR EL ARCHIVO HTML
 
 $html = file_get_contents(__DIR__ . '/list_users.html');
 
@@ -113,9 +116,7 @@ if ($html === false) {
 }
 
 
-// =====================================================
-// NUEVO CAMBIO 3: ENVIAR LOS DATOS AL HTML
-// =====================================================
+// ENVIAR LOS DATOS AL HTML
 
 $html = str_replace('{{USER_ROWS}}', $rows, $html);
 
@@ -138,9 +139,7 @@ $html = str_replace(
 );
 
 
-// =====================================================
-// NUEVO CAMBIO 4: MOSTRAR EL HTML
-// =====================================================
+// MOSTRAR EL HTML
 
 echo $html;
 exit;

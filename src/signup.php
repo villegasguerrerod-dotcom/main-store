@@ -50,5 +50,3 @@ require('../settings/database.php');
 
 
     }
-        
-        

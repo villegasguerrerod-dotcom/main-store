@@ -11,8 +11,6 @@ if (!isset($_SESSION['user_id'])) {
 include('../settings/database.php');
 
 
-
-
     // Filter received from the select (all | active | inactive)
     $filter = $_GET['filter'] ?? 'all';
     $where = '';
