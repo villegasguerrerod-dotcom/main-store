@@ -35,9 +35,39 @@ if ($_SESSION['user_role'] === 'administrator') {
 }
 
 // 5. Replace HTML placeholder
+// 5. Prepare Users card only for administrators
+$users_card = '';
+
+if ($_SESSION['user_role'] === 'administrator') {
+    $users_card = '
+        <div class="col-xl-4 col-md-6 mb-4">
+            <div class="option-card">
+                <i class="fas fa-users"></i>
+
+                <h5 class="font-weight-bold">
+                    Users
+                </h5>
+
+                <p class="text-gray-600">
+                    View the registered users.
+                </p>
+
+                <a href="list_users.php">Access</a>
+            </div>
+        </div>
+    ';
+}
+
+// 6. Replace HTML placeholders
 $html = str_replace(
     '{{LIST_USERS_OPTION}}',
     $list_users_option,
+    $html
+);
+
+$html = str_replace(
+    '{{USERS_CARD}}',
+    $users_card,
     $html
 );
 
