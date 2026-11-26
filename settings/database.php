@@ -20,7 +20,7 @@
     );
  
 
-    //Supa conecnection 
+    //Supa conecction 
 
     $supa_host = "aws-1-us-west-2.pooler.supabase.com";
     $supa_port = "6543";
@@ -49,5 +49,3 @@
     }
       
 ?>
- 
- 
